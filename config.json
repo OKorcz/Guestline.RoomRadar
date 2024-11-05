@@ -1,0 +1,4 @@
+{
+  "HotelsDataPath": "./Data/hotels.json",
+  "BookingsDataPath": "./Data/bookings.json"
+}
