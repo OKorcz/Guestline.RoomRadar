@@ -1,6 +1,7 @@
 
 using System.Text.RegularExpressions;
 using Guestline.RoomRadar.Config;
+using Guestline.RoomRadar.Helpers;
 using Guestline.RoomRadar.Models;
 using Guestline.RoomRadar.Services;
 
@@ -42,7 +43,7 @@ public sealed class AvailableCommand(IFileOpener fileOpener) : ICommand
             (!match.Groups["date"].Success && !match.Groups["daterange"].Success) ||
             (match.Groups["date"].Success && match.Groups["daterange"].Success))
         {
-            return "ERROR, unable to parse command";
+            return "ERROR, unable to execute command due to syntax issue.";
         }
 
         var hotelId = match.Groups["hid"].Value;
@@ -52,14 +53,9 @@ public sealed class AvailableCommand(IFileOpener fileOpener) : ICommand
         var readHotelsTask = fileOpener.ReadAllFileContentAsJsonObjectAsync<List<Hotel>>(configuration.HotelsDataPath);
         var readBookingsTask = fileOpener.ReadAllFileContentAsJsonObjectAsync<List<Booking>>(configuration.BookingsDataPath);
 
-        // Await for read tasks
-        await Task.WhenAll(readHotelsTask, readBookingsTask);
-
-        // Retrieve data from tasks
-        var hotels = readHotelsTask.Result;
-        var bookings = readBookingsTask.Result;
-
         // Common checks
+        var hotels = await readHotelsTask;
+
         if (hotels == null || hotels.Count == 0)
             return "There is no any hotels in database.";
 
@@ -71,11 +67,63 @@ public sealed class AvailableCommand(IFileOpener fileOpener) : ICommand
         if (!hotel.RoomTypes.Any(rt => rt.Code == roomType))
             return "This hotel doesn't have room with type of " + roomType;
 
+        var bookings = await readBookingsTask;
+
+        if (bookings == null || bookings.Count == 0)
+            return "There is no any bookings in database.";
+
+        var bookingsHotelRoomTypeScoped = bookings.Where(b =>
+            b.HotelId == hotelId &&
+            b.RoomType == roomType).ToList();
+
         // Single date
-        var singleDate = match.Groups["date"].Value;
+        if (match.Groups["date"].Success)
+        {
+            var date = match.Groups["date"].Value.ConvertToDateOnly();
+            var selectedDateTicks = date.ToTicks();
+
+            // Should be 0 if available
+            var occupiedBookings = bookingsHotelRoomTypeScoped.Where(b =>
+                b.Arrival.ToTicks() < selectedDateTicks &&
+                b.Departure.ToTicks() > selectedDateTicks);
+
+            var availableRoomsCount = hotel.Rooms.Where(r => r.RoomType == roomType).Count() - occupiedBookings.Count();
+
+            if (availableRoomsCount > 0)
+            {
+                return $"There is/are {availableRoomsCount} available room(s).";
+            }
+
+            return "Lack of available rooms.";
+        }
 
         // Date range
-        var daterange = match.Groups["daterange"].Value;
+        if (match.Groups["daterange"].Success)
+        {
+            var daterange = match.Groups["daterange"].Value;
+            var splittedDateRange = daterange.Split('-');
+
+            var fromDate = splittedDateRange[0].ConvertToDateOnly().ToTicks();
+            var toDate = splittedDateRange[1].ConvertToDateOnly().ToTicks();
+
+            // Should be 0 if available
+            var occupiedBookings = bookingsHotelRoomTypeScoped.Where(b =>
+                (b.Arrival.ToTicks() < fromDate &&
+                b.Departure.ToTicks() > fromDate) ||
+                (b.Arrival.ToTicks() < toDate &&
+                b.Departure.ToTicks() > toDate) ||
+                (b.Arrival.ToTicks() > toDate &&
+                b.Departure.ToTicks() < fromDate));
+
+            var availableRoomsCount = hotel.Rooms.Where(r => r.RoomType == roomType).Count() - occupiedBookings.Count();
+
+            if (availableRoomsCount > 0)
+            {
+                return $"There is/are {availableRoomsCount} available room(s).";
+            }
+
+            return "Lack of available rooms.";
+        }
 
 
         return await Task.Run(() => "remove error and warning");

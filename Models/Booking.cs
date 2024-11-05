@@ -9,7 +9,7 @@ namespace Guestline.RoomRadar.Models;
 public sealed class Booking
 {
         [JsonPropertyName("hotelId")]
-        public string Id { get; set; } = "";
+        public string HotelId { get; set; } = "";
 
         [JsonPropertyName("arrival")]
         public string ArrivalRaw { private get; init; } = "";
