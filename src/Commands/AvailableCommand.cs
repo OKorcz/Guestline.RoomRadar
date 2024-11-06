@@ -6,7 +6,7 @@ using Guestline.RoomRadar.Services;
 
 namespace Guestline.RoomRadar.Commands;
 
-public sealed class AvailableCommand(IFileOpener fileOpener) : ICommand
+public sealed class AvailableCommand(IFileOpener fileOpener, IConfigurationProvider configurationProvider) : ICommand
 {
 
 #pragma warning disable SYSLIB1045 // Convert to 'GeneratedRegexAttribute'.
@@ -32,7 +32,7 @@ public sealed class AvailableCommand(IFileOpener fileOpener) : ICommand
     public async Task<string> ExecuteAsync(string command)
     {
         // Retrieve appconfiguration
-        var configuration = ConfigurationProvider.AppConfiguration;
+        var configuration = configurationProvider.AppConfiguration;
 
         var match = commandParser.Match(command);
 
@@ -83,7 +83,7 @@ public sealed class AvailableCommand(IFileOpener fileOpener) : ICommand
 
             // Should be 0 if available
             var occupiedBookings = bookingsHotelRoomTypeScoped.Where(b =>
-                b.Arrival.ToTicks() < selectedDateTicks &&
+                b.Arrival.ToTicks() <= selectedDateTicks &&
                 b.Departure.ToTicks() > selectedDateTicks);
 
             var availableRoomsCount = hotel.Rooms.Where(r => r.RoomType == roomType).Count() - occupiedBookings.Count();

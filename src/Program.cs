@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Guestline.RoomRadar.Commands;
 using Guestline.RoomRadar.Workers;
 using Microsoft.Extensions.Logging;
+using Guestline.RoomRadar.Config;
 
 var builder = Host.CreateDefaultBuilder(args);
 
@@ -15,6 +16,8 @@ builder.ConfigureServices(services =>
             options.ServicesStopConcurrently = true;
             options.BackgroundServiceExceptionBehavior = BackgroundServiceExceptionBehavior.StopHost;
         });
+
+    services.AddSingleton<IConfigurationProvider, ConfigurationProvider>();
 
     services.AddSingleton<AvailableCommand>();
     services.AddSingleton<HelpCommand>();

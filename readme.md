@@ -5,3 +5,6 @@ Application is also configured using `config.json` file which contains paths to 
 
 # Usage
 Navigate to root project folder ***Guestline.Roomradar*** (This folder contains this *readme.md*) and run command `dotnet run --project ./src`.
+
+# Tests
+As above but run command `dotnet test`.

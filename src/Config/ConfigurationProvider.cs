@@ -8,17 +8,27 @@ public sealed record AppConfiguration(
     string BookingsDataPath
 );
 
-public static class ConfigurationProvider
+public class ConfigurationProvider : IConfigurationProvider
 {
     private const string configPath = "./config.json";
-    private static readonly Lazy<AppConfiguration> appConfiguration = new(() => GetAppConfigurationAsync());
+    private readonly Lazy<AppConfiguration> appConfiguration;
 
-    public static AppConfiguration AppConfiguration => appConfiguration.Value;
+    public ConfigurationProvider()
+    {
+        appConfiguration = new(() => GetAppConfigurationAsync());
+    }
 
-    private static AppConfiguration GetAppConfigurationAsync()
+    public AppConfiguration AppConfiguration => appConfiguration.Value;
+
+    private AppConfiguration GetAppConfigurationAsync()
     {
         var fileContent = new FileOpener().ReadAllFileContent(configPath);
 
         return JsonSerializer.Deserialize<AppConfiguration>(fileContent) ?? new AppConfiguration("", "");
     }
+}
+
+public interface IConfigurationProvider
+{
+    public AppConfiguration AppConfiguration { get; }
 }
