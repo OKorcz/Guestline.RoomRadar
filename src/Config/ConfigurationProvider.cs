@@ -27,8 +27,3 @@ public sealed class ConfigurationProvider : IConfigurationProvider
         return JsonSerializer.Deserialize<AppConfiguration>(fileContent) ?? new AppConfiguration("", "");
     }
 }
-
-public interface IConfigurationProvider
-{
-    public AppConfiguration AppConfiguration { get; }
-}
