@@ -3,23 +3,54 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guestline.RoomRadar", "Guestline.RoomRadar.csproj", "{54DC2519-A9E0-4AEE-A6A7-085535F5CE99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guestline.RoomRadar", "src\Guestline.RoomRadar.csproj", "{BB80AFC7-7D26-4E58-A066-44FFBCC79608}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E9545E7F-B2DF-459B-89BB-1C01FD56E8F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guestline.RoomRadar.Tests", "tests\Guestline.RoomRadar.Tests\Guestline.RoomRadar.Tests.csproj", "{4274E4EA-ECBA-4154-A36D-37CF750468CD}"
 EndProject
 Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{54DC2519-A9E0-4AEE-A6A7-085535F5CE99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54DC2519-A9E0-4AEE-A6A7-085535F5CE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54DC2519-A9E0-4AEE-A6A7-085535F5CE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54DC2519-A9E0-4AEE-A6A7-085535F5CE99}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1EB5C1E6-F33C-4AE4-BFF7-7A37EA4771FF}
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Debug|x64.Build.0 = Debug|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Debug|x86.Build.0 = Debug|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Release|x64.ActiveCfg = Release|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Release|x64.Build.0 = Release|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Release|x86.ActiveCfg = Release|Any CPU
+		{BB80AFC7-7D26-4E58-A066-44FFBCC79608}.Release|x86.Build.0 = Release|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Debug|x64.Build.0 = Debug|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Debug|x86.Build.0 = Debug|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Release|x64.ActiveCfg = Release|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Release|x64.Build.0 = Release|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Release|x86.ActiveCfg = Release|Any CPU
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4274E4EA-ECBA-4154-A36D-37CF750468CD} = {E9545E7F-B2DF-459B-89BB-1C01FD56E8F9}
 	EndGlobalSection
 EndGlobal
