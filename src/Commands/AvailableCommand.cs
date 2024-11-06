@@ -10,7 +10,7 @@ public sealed class AvailableCommand(IFileOpener fileOpener) : ICommand
 {
 
 #pragma warning disable SYSLIB1045 // Convert to 'GeneratedRegexAttribute'.
-    private readonly Regex commandParser = new(@"Availability\W*\(\W*(?<hid>\S[^,]+),\D*((?<date>\d{8})|(?<daterange>\d{8}-\d{8}))[, ]*\W*(?<roomtype>\w+)\s*\)", RegexOptions.Compiled);
+    private readonly Regex commandParser = new(@"Availability\W*\(\W*(?<hid>\S[^,]+),\D*((?<date>\d{8})|(?<daterange>\d{8}-\d{8}))\s*,\s*(?<roomtype>\w+)\s*\)", RegexOptions.Compiled);
 
 #pragma warning restore SYSLIB1045 // Convert to 'GeneratedRegexAttribute'.
 

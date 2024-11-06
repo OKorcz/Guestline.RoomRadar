@@ -10,7 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="TestData/bookings.json" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestData/hotels.json" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="fluentassertions" Version="6.12.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="NUnit" Version="3.14.0" />
     <PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
@@ -19,6 +28,10 @@
 
   <ItemGroup>
     <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Guestline.RoomRadar.csproj" />
   </ItemGroup>
 
 </Project>
