@@ -8,3 +8,6 @@ Navigate to root project folder ***Guestline.Roomradar*** (This folder contains 
 
 # Tests
 As above but run command `dotnet test`.
+
+# Status
+[![Restore Build Test](https://github.com/OKorcz/Guestline.RoomRadar/actions/workflows/dotnet_restore_build_test.yml/badge.svg)](https://github.com/OKorcz/Guestline.RoomRadar/actions/workflows/dotnet_restore_build_test.yml)
