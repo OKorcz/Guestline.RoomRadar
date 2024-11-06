@@ -13,7 +13,7 @@ public sealed class MainWorker(IEnumerable<ICommand> commands) : IHostedService
             .Centered()
             .Color(Color.Purple));
 
-        var command = Console.ReadLine();
+        var command = AnsiConsole.Prompt(new TextPrompt<string>(">"));
 
         var commandExecuted = false;
         while (command != null && !command.Equals("exit", StringComparison.CurrentCultureIgnoreCase))
@@ -48,7 +48,7 @@ public sealed class MainWorker(IEnumerable<ICommand> commands) : IHostedService
                         break;
                 }
 
-            command = Console.ReadLine();
+            command = AnsiConsole.Prompt(new TextPrompt<string>(">"));
         }
 
         Environment.Exit(1337);
