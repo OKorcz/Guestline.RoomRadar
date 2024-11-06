@@ -4,10 +4,12 @@ using Spectre.Console;
 
 namespace Guestline.RoomRadar.Workers;
 
-public sealed class MainWorker(IEnumerable<ICommand> commands) : IHostedService
+public sealed class MainWorker(IEnumerable<ICommand> commands, HelpCommand helpCommand) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
+        commands = commands.Append(helpCommand);
+
         AnsiConsole.Write(
             new FigletText("Guestline.RoomRadar")
             .Centered()
@@ -15,43 +17,36 @@ public sealed class MainWorker(IEnumerable<ICommand> commands) : IHostedService
 
         var command = AnsiConsole.Prompt(new TextPrompt<string>(">"));
 
-        var commandExecuted = false;
-        while (command != null && !command.Equals("exit", StringComparison.CurrentCultureIgnoreCase))
+
+        _ = Task.Run(async () =>
         {
-            commandExecuted = false;
-
-            foreach (var cmd in commands)
+            while (true)
             {
-                if (cmd.CanExecute(command).canExecute)
+                if (!commands.Any(c => c.CanExecute(command).canExecute))
                 {
-                    var result = await cmd.ExecuteAsync(command);
-                    AnsiConsole.MarkupLine($"Result: [yellow]{result}[/]");
-
-                    commandExecuted = true;
-                    break;
+                    AnsiConsole.MarkupLine($"Result: [yellow]There is no command '{command}'[/]");
                 }
-            }
-            if (!commandExecuted)
-                switch (command)
+                else
                 {
-                    case "help":
-                        AnsiConsole.MarkupLine("Possible commands:");
-                        foreach (var cmd in commands)
+                    foreach (var cmd in commands)
+                    {
+                        if (cmd.CanExecute(command).canExecute)
                         {
-                            AnsiConsole.MarkupLine($"[green]{cmd.UsageExample}[/]");
+                            var result = await cmd.ExecuteAsync(command);
+                            AnsiConsole.MarkupLine($"[yellow]{result}[/]");
+
+                            break;
                         }
-                        AnsiConsole.MarkupLine("[green]help[/]");
-                        AnsiConsole.MarkupLine("[green]exit[/]");
-                        break;
-                    default:
-                        AnsiConsole.MarkupLine($"[red]{command} command not supported! Type 'help' to get all available commands[/]");
-                        break;
+
+                    }
                 }
 
-            command = AnsiConsole.Prompt(new TextPrompt<string>(">"));
-        }
+                command = AnsiConsole.Prompt(new TextPrompt<string>(">"));
+            }
+        }, cancellationToken);
 
-        Environment.Exit(1337);
+        // To remove warning CS1998
+        await Task.CompletedTask;
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

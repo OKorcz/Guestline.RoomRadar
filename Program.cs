@@ -1,8 +1,4 @@
-﻿using System.Text.Json;
-using Guestline.RoomRadar.Config;
-using Guestline.RoomRadar.Models;
-using Guestline.RoomRadar.Services;
-using Spectre.Console;
+﻿using Guestline.RoomRadar.Services;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Guestline.RoomRadar.Commands;
@@ -21,11 +17,15 @@ builder.ConfigureServices(services =>
         });
 
     services.AddSingleton<AvailableCommand>();
+    services.AddSingleton<HelpCommand>();
+    services.AddSingleton<ExitCommand>();
+
     services.AddSingleton<IFileOpener, FileOpener>();
 
     services.AddHostedService<MainWorker>();
 
     services.AddSingleton<ICommand, AvailableCommand>(sp => sp.GetRequiredService<AvailableCommand>());
+    services.AddSingleton<ICommand, ExitCommand>(sp => sp.GetRequiredService<ExitCommand>());
 });
 
 // Remove default host logger

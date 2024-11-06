@@ -1,4 +1,3 @@
-
 using System.Text.RegularExpressions;
 using Guestline.RoomRadar.Config;
 using Guestline.RoomRadar.Helpers;
