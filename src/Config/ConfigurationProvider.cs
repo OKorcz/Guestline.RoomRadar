@@ -8,7 +8,7 @@ public sealed record AppConfiguration(
     string BookingsDataPath
 );
 
-public class ConfigurationProvider : IConfigurationProvider
+public sealed class ConfigurationProvider : IConfigurationProvider
 {
     private const string configPath = "./config.json";
     private readonly Lazy<AppConfiguration> appConfiguration;

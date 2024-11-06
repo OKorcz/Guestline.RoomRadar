@@ -14,7 +14,7 @@ public sealed class AvailableCommand(IFileOpener fileOpener, IConfigurationProvi
 
 #pragma warning restore SYSLIB1045 // Convert to 'GeneratedRegexAttribute'.
 
-    public string UsageExample => "[green]Availability[/]([purple]H1[/], [purple]20240901[/] or [purple]20240901-20240903[/], [purple]SGL[/])";
+    public string UsageExample => "Availability([purple]H1[/], [purple]20240901[/] [italic dim]or[/] [purple]20240901-20240903[/], [purple]SGL[/])";
 
     public (bool canExecute, string? errorMessage) CanExecute(string command)
     {

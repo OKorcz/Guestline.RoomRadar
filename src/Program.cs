@@ -5,6 +5,9 @@ using Guestline.RoomRadar.Commands;
 using Guestline.RoomRadar.Workers;
 using Microsoft.Extensions.Logging;
 using Guestline.RoomRadar.Config;
+using Spectre.Console;
+
+AnsiConsole.Clear();
 
 var builder = Host.CreateDefaultBuilder(args);
 
